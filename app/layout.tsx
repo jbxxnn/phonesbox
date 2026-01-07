@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { BottomNav } from "@/components/bottom-nav";
 import { Navbar } from "@/components/navbar";
+import { Suspense } from "react";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -37,7 +38,9 @@ export default function RootLayout({
         >
           <Navbar />
           {children}
-          <BottomNav />
+          <Suspense fallback={null}>
+            <BottomNav />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

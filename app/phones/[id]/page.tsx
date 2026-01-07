@@ -1,12 +1,13 @@
 import { getPhone } from "@/lib/data";
+export const dynamic = "force-dynamic";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { ArrowLeft, Heart, Share2, ShoppingCart, Star, Minus, Plus, Check, ShieldCheck, Truck } from "lucide-react";
+import { ArrowLeft, Heart, Share2, Star } from "lucide-react";
 import { notFound } from "next/navigation";
 import { InquiryForm } from "@/components/inquiry-form";
+import { Suspense } from "react";
 
-export default async function PhonePage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params;
+async function PhoneDetailsContent({ id }: { id: string }) {
     const phone = await getPhone(id);
 
     if (!phone) {
@@ -27,30 +28,7 @@ export default async function PhonePage({ params }: { params: Promise<{ id: stri
     const storage = ["256 GB", "512 GB", "1 TB"];
 
     return (
-        <main className="min-h-screen bg-background pb-32 md:pb-20">
-            {/* Mobile Header - Hidden on Desktop */}
-            <div className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md flex items-center justify-between px-5 py-3">
-                <Link href="/" className="p-2 -ml-2 rounded-full hover:bg-slate-100 transition-colors">
-                    <ArrowLeft className="w-5 h-5 text-foreground" />
-                </Link>
-                <div className="flex gap-2">
-                    <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
-                        <Heart className="w-5 h-5 text-foreground" />
-                    </button>
-                    <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
-                        <Share2 className="w-5 h-5 text-foreground" />
-                    </button>
-                </div>
-            </div>
-
-            {/* Desktop Breadcrumb */}
-            <div className="hidden md:block container mx-auto px-4 py-8">
-                <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to phones
-                </Link>
-            </div>
-
+        <>
             <div className="container mx-auto px-5 md:px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16">
 
@@ -148,8 +126,6 @@ export default async function PhonePage({ params }: { params: Promise<{ id: stri
                             <h3 className="font-semibold mb-4 text-lg">Interested in this phone?</h3>
                             <InquiryForm phoneId={phone.id} isAvailable={isAvailable} />
                         </div>
-
-                        {/* Mobile-only Inquiry Trigger (if needed, or just let them use bottom bar) */}
                     </div>
                 </div>
             </div>
@@ -164,6 +140,41 @@ export default async function PhonePage({ params }: { params: Promise<{ id: stri
                     Buy Now
                 </button>
             </div>
+        </>
+    );
+}
+
+export default async function PhonePage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
+
+    return (
+        <main className="min-h-screen bg-background pb-32 md:pb-20">
+            {/* Mobile Header - Hidden on Desktop */}
+            <div className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md flex items-center justify-between px-5 py-3">
+                <Link href="/" className="p-2 -ml-2 rounded-full hover:bg-slate-100 transition-colors">
+                    <ArrowLeft className="w-5 h-5 text-foreground" />
+                </Link>
+                <div className="flex gap-2">
+                    <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
+                        <Heart className="w-5 h-5 text-foreground" />
+                    </button>
+                    <button className="p-2 rounded-full hover:bg-slate-100 transition-colors">
+                        <Share2 className="w-5 h-5 text-foreground" />
+                    </button>
+                </div>
+            </div>
+
+            {/* Desktop Breadcrumb */}
+            <div className="hidden md:block container mx-auto px-4 py-8">
+                <Link href="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back to phones
+                </Link>
+            </div>
+
+            <Suspense fallback={<div className="container mx-auto px-5 py-20 text-center">Loading phone details...</div>}>
+                <PhoneDetailsContent id={id} />
+            </Suspense>
         </main>
     );
 }

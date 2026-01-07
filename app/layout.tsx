@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { ThemeProvider } from "next-themes";
+import { BottomNav } from "@/components/bottom-nav";
+import { Navbar } from "@/components/navbar";
 import "./globals.css";
 
 const defaultUrl = process.env.VERCEL_URL
@@ -9,14 +11,13 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Phone Broker Platform",
+  description: "Premium smartphones at broker prices.",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  display: "swap",
+const outfit = Outfit({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -26,14 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.className} antialiased`}>
+      <body className={`${outfit.className} antialiased bg-linear-to-b from-blue-100/40 via-blue-50/20 to-white min-h-screen text-slate-900`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
+          forcedTheme="light"
           disableTransitionOnChange
         >
+          <Navbar />
           {children}
+          <BottomNav />
         </ThemeProvider>
       </body>
     </html>

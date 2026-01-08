@@ -17,13 +17,27 @@ export function PhoneGrid({ phones, currency, mobileLayout = 'grid' }: {
 
     if (mobileLayout === 'slider') {
         return (
-            <div className="flex -mx-5 px-5 overflow-x-auto snap-x snap-mandatory py-4 gap-4 no-scrollbar sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-6 sm:overflow-visible sm:px-0 sm:mx-0 sm:py-0">
-                {phones.map((phone) => (
-                    <div key={phone.id} className="min-w-[50%] w-[50%] snap-start sm:w-auto sm:min-w-0">
-                        <PhoneCard phone={phone} currency={currency} />
+            <>
+                {/* Mobile Slider View (Visible &lt; md) */}
+                <div className="md:hidden">
+                    <div className="flex -mx-5 px-5 overflow-x-auto snap-x snap-mandatory py-4 gap-4 no-scrollbar">
+                        {phones.map((phone) => (
+                            <div key={phone.id} className="min-w-[50%] w-[50%] snap-start">
+                                <PhoneCard phone={phone} currency={currency} />
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </div>
+
+                {/* Desktop Grid View (Visible >= md) */}
+                <div className="hidden md:block">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full">
+                        {phones.map((phone) => (
+                            <PhoneCard key={`desktop-${phone.id}`} phone={phone} currency={currency} />
+                        ))}
+                    </div>
+                </div>
+            </>
         );
     }
 

@@ -36,7 +36,9 @@ export default function RootLayout({
           forcedTheme="light"
           disableTransitionOnChange
         >
-          <Navbar />
+          <Suspense fallback={<div className="h-16 w-full bg-background/80 border-b" />}>
+            <Navbar />
+          </Suspense>
           {children}
           <Suspense fallback={null}>
             <BottomNav />

@@ -17,7 +17,7 @@ async function LatestPhones() {
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background pb-24 md:pb-12">
+    <main className="min-h-screen pb-24 md:pb-12">
       {/* ... keeping header ... */}
       <div className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md px-5 py-3 flex items-center gap-4">
         <div className="flex-1 relative">

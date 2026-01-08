@@ -1,29 +1,41 @@
 "use client";
 
 import { Smartphone, Monitor, Headphones, Tablet, Speaker, Grid } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const categories = [
-    { label: "Mobile", icon: Smartphone },
-    { label: "Headphone", icon: Headphones },
+    { label: "Mobile", icon: Smartphone, image: "/phone-cat.png" },
+    { label: "Headphones", icon: Headphones },
     { label: "Tablets", icon: Tablet },
-    { label: "Laptop", icon: Monitor },
+    { label: "Laptops", icon: Monitor }, // Fixed pluralization for consistency
     { label: "Speakers", icon: Speaker },
     { label: "More", icon: Grid },
 ];
 
 export function Categories() {
     return (
-        <div className="grid grid-cols-4 gap-4 sm:flex sm:flex-wrap sm:justify-start">
+        <div className="grid grid-cols-3 md:grid-cols-4 gap-4 sm:flex sm:flex-wrap sm:justify-start">
             {categories.map((cat, i) => (
                 <button
                     key={cat.label}
-                    className="flex flex-col items-center gap-2 group"
+                    className="flex flex-col items-center gap-2 group bg-slate-50 rounded-md p-2 transition-all group-hover:bg-white group-hover:border-primary/20 group-hover:shadow-lg group-hover:scale-105"
                 >
-                    <div className="w-14 h-14 rounded-2xl bg-white shadow-sm border border-slate-100 flex items-center justify-center text-slate-600 transition-all group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-105 group-hover:shadow-md">
-                        <cat.icon className="w-6 h-6" />
+                    <div className="w-16 h-16 flex items-center justify-center text-slate-600  overflow-hidden relative">
+                        {cat.image ? (
+                            <div className="w-24 h-24 relative">
+                                <Image
+                                    src={cat.image}
+                                    alt={cat.label}
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                        ) : (
+                            <cat.icon className="w-6 h-6 group-hover:text-primary transition-colors" />
+                        )}
                     </div>
-                    <span className="text-xs font-medium text-slate-600 group-hover:text-foreground">
+                    <span className="text-sm font-semibold text-slate-600 group-hover:text-foreground transition-colors">
                         {cat.label}
                     </span>
                 </button>

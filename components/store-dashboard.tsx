@@ -46,7 +46,7 @@ export function StoreDashboard({
     return (
         <div className="min-h-screen pb-24 md:pb-12 space-y-8">
             {/* Mobile Header with Search */}
-            <div className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md px-5 py-3 flex items-center gap-4 border-b">
+            <div className="md:hidden sticky top-0 z-40 bg-background/10 backdrop-blur-md px-5 py-3 flex items-center gap-4 border-b">
                 <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
                     <ShoppingBag className="w-5 h-5 text-foreground" />
                     <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full ring-2 ring-white"></span>
@@ -58,7 +58,7 @@ export function StoreDashboard({
                         placeholder="Search phones..."
                         value={searchQuery}
                         onChange={(e) => handleSearch(e.target.value)}
-                        className="w-full h-10 bg-slate-100 rounded-full pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-muted-foreground"
+                        className="w-full h-10 bg-white rounded-full pl-10 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-muted-foreground"
                     />
                     {searchQuery ? (
                         <button

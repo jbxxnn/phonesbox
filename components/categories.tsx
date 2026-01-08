@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 
 const categories = [
     { label: "Mobile", icon: Smartphone, image: "/phone-cat.png" },
-    { label: "Headphones", icon: Headphones },
-    { label: "Tablets", icon: Tablet },
-    { label: "Laptops", icon: Monitor }, // Fixed pluralization for consistency
-    { label: "Speakers", icon: Speaker },
+    { label: "Headphones", icon: Headphones, image: "/headphone-cat.png" },
+    { label: "Tablets", icon: Tablet, image: "/tablet-cat.png" },
+    { label: "Laptops", icon: Monitor, image: "/laptop-cat.png" }, // Fixed pluralization for consistency
+    { label: "Speakers", icon: Speaker, image: "/speaker-cat.png" },
     { label: "More", icon: Grid },
 ];
 

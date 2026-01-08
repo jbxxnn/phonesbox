@@ -1,4 +1,6 @@
 import { getPhones } from "@/lib/data";
+import { getSiteSettings } from "@/lib/settings";
+import { formatPrice } from "@/lib/utils";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +11,7 @@ import { Suspense } from "react";
 
 async function PhonesTable() {
     const phones = await getPhones();
+    const settings = await getSiteSettings();
 
     return (
         <div className="rounded-md border">
@@ -38,7 +41,7 @@ async function PhonesTable() {
                                         <div className="text-xs text-muted-foreground">{phone.brand} • {phone.variant}</div>
                                     </td>
                                     <td className="p-4 align-middle">
-                                        {new Intl.NumberFormat('en-US', { style: 'currency', currency: phone.currency }).format(phone.price)}
+                                        {formatPrice(phone.price, settings.site_currency || phone.currency)}
                                     </td>
                                     <td className="p-4 align-middle">
                                         <Badge variant={phone.availability_status === 'in_stock' ? 'default' : 'secondary'}>

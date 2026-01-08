@@ -1,4 +1,6 @@
 import { getPhone } from "@/lib/data";
+import { getSiteSettings } from "@/lib/settings";
+import { formatPrice } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
@@ -9,13 +11,15 @@ import { Suspense } from "react";
 
 async function PhoneDetailsContent({ id }: { id: string }) {
     const phone = await getPhone(id);
+    const settings = await getSiteSettings();
 
     if (!phone) {
         notFound();
     }
 
     const isAvailable = phone.availability_status === 'in_stock';
-    const priceFormatted = new Intl.NumberFormat('en-US', { style: 'currency', currency: phone.currency }).format(phone.price);
+    const displayCurrency = settings.site_currency || phone.currency;
+    const priceFormatted = formatPrice(phone.price, displayCurrency);
 
     // Mock data for UI demo
     const colors = [
@@ -82,7 +86,7 @@ async function PhoneDetailsContent({ id }: { id: string }) {
                             <div className="flex items-baseline gap-2">
                                 <span className="text-3xl font-bold text-blue-600">{priceFormatted}</span>
                                 <span className="text-sm text-muted-foreground line-through opacity-70">
-                                    {(phone.price * 1.1).toLocaleString('en-US', { style: 'currency', currency: phone.currency })}
+                                    {formatPrice(phone.price * 1.1, displayCurrency)}
                                 </span>
                             </div>
                         </div>

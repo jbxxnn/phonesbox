@@ -11,9 +11,11 @@ import { Navbar } from "./navbar";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export function StoreDashboard({
-    initialPhones
+    initialPhones,
+    currency
 }: {
-    initialPhones: Phone[]
+    initialPhones: Phone[],
+    currency?: string
 }) {
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -90,10 +92,12 @@ export function StoreDashboard({
                         </section>
 
                         <section className="space-y-4">
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-center">
                                 <h3 className="font-bold text-lg">Categories</h3>
                             </div>
-                            <Categories />
+                            <div className="flex items-center justify-center">
+                                <Categories />
+                            </div>
                         </section>
                     </>
                 )}
@@ -109,7 +113,7 @@ export function StoreDashboard({
                         )}
                     </div>
 
-                    <PhoneGrid phones={filteredPhones} />
+                    <PhoneGrid phones={filteredPhones} currency={currency} />
 
                     {/* No Results State */}
                     {searchQuery && filteredPhones.length === 0 && (
@@ -124,6 +128,17 @@ export function StoreDashboard({
                         </div>
                     )}
                 </section>
+
+                {/* Latest Phones (New Condition Only) - Hidden when searching */}
+                {!searchQuery && (
+                    <section className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <h3 className="font-bold text-lg">Latest Phones</h3>
+                            <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700">See All</Link>
+                        </div>
+                        <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} />
+                    </section>
+                )}
             </div>
         </div>
     );

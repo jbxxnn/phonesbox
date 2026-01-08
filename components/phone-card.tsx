@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { cn, formatPrice } from "@/lib/utils";
 import { Phone } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 
-export function PhoneCard({ phone }: { phone: Phone }) {
+export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string }) {
     const isAvailable = phone.availability_status === 'in_stock';
+    const displayCurrency = currency || phone.currency;
 
     return (
         <Link href={`/phones/${phone.id}`} className="group block">
@@ -38,7 +40,7 @@ export function PhoneCard({ phone }: { phone: Phone }) {
 
                     <div className="pt-2 flex items-center justify-between">
                         <div className="font-bold text-xl">
-                            {new Intl.NumberFormat('en-US', { style: 'currency', currency: phone.currency }).format(phone.price)}
+                            {formatPrice(phone.price, displayCurrency)}
                         </div>
                         {phone.availability_status !== 'in_stock' && (
                             <span className="text-xs font-medium text-amber-600 px-2 py-1 bg-amber-50 rounded-full border border-amber-200">

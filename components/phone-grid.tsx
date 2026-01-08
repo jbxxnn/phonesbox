@@ -1,7 +1,7 @@
 import { Phone } from "@/lib/types";
 import { PhoneCard } from "./phone-card";
 
-export function PhoneGrid({ phones }: { phones: Phone[] }) {
+export function PhoneGrid({ phones, currency }: { phones: Phone[], currency?: string }) {
     if (!phones || phones.length === 0) {
         return (
             <div className="text-center py-20">
@@ -14,7 +14,7 @@ export function PhoneGrid({ phones }: { phones: Phone[] }) {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
             {phones.map((phone) => (
-                <PhoneCard key={phone.id} phone={phone} />
+                <PhoneCard key={phone.id} phone={phone} currency={currency} />
             ))}
         </div>
     );

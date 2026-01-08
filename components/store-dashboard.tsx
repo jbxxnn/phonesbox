@@ -182,6 +182,7 @@ export function StoreDashboard({
                                     return true;
                                 })}
                                 currency={currency}
+                                mobileLayout="slider"
                             />
                         </section>
                     </>

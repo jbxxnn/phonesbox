@@ -167,9 +167,9 @@ export function StoreDashboard({
 
                         {/* Shop by Price */}
                         <section className="space-y-6">
-                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <h3 className="font-bold text-lg" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px' }}>Shop by Price</h3>
-                                <div className="flex p-1 bg-slate-100 rounded-full overflow-x-auto gap-2 border border-slate-200 w-full sm:w-auto max-w-full">
+                            <div className="flex flex-row items-center justify-between gap-4">
+                                <h3 className="font-bold text-lg shrink-0 text-center sm:text-left" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px', width: '150px' }}>Shop by Price</h3>
+                                <div className="flex p-1 bg-slate-100 rounded-full overflow-x-auto gap-2 border border-slate-200 flex-1 min-w-0 w-auto">
                                     {PRICE_RANGES.map((range) => (
                                         <button
                                             key={range.id}

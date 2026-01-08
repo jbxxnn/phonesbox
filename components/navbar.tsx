@@ -22,7 +22,7 @@ export function Navbar() {
                     <Link href="/" className="hover:text-foreground transition-colors">
                         Home
                     </Link>
-                    <Link href="#" className="hover:text-foreground transition-colors">
+                    <Link href="/shop" className="hover:text-foreground transition-colors">
                         All Phones
                     </Link>
                     <Link href="#" className="hover:text-foreground transition-colors">

@@ -3,11 +3,31 @@
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Plus, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function NewPhonePage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+
+    // Simple state for array inputs
+    const [imageUrls, setImageUrls] = useState<string[]>([""]);
+    const [colorInput, setColorInput] = useState("");
+
+    const addImageUrlField = () => setImageUrls([...imageUrls, ""]);
+    const updateImageUrl = (index: number, value: string) => {
+        const newUrls = [...imageUrls];
+        newUrls[index] = value;
+        setImageUrls(newUrls);
+    };
+    const removeImageUrl = (index: number) => {
+        setImageUrls(imageUrls.filter((_, i) => i !== index));
+    };
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -16,8 +36,10 @@ export default function NewPhonePage() {
         const formData = new FormData(event.currentTarget);
         const supabase = createClient();
 
-        // We should probably optimize this with a Server Action, 
-        // but client-side submission is okay for admin for now.
+        // Process images: filter empty strings
+        const images = imageUrls.filter(url => url.trim() !== "");
+        // Process colors: split by comma
+        const colors = colorInput.split(",").map(c => c.trim()).filter(c => c !== "");
 
         const phoneData = {
             brand: formData.get("brand"),
@@ -27,7 +49,11 @@ export default function NewPhonePage() {
             price: parseFloat(formData.get("price") as string),
             currency: "USD",
             availability_status: formData.get("status"),
-            image_url: formData.get("image_url"),
+            image_url: images[0] || "", // Main image is the first one
+            description: formData.get("description"),
+            images: images,
+            colors: colors,
+            specs: {}, // Placeholder for future specs JSON
         };
 
         const { error } = await supabase.from("phones").insert(phoneData);
@@ -42,69 +68,129 @@ export default function NewPhonePage() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6 pb-24">
             <div className="space-y-2">
                 <h1 className="text-3xl font-bold">Add New Phone</h1>
-                <p className="text-muted-foreground">Create a new listing for the store.</p>
+                <p className="text-muted-foreground">Create a new comprehensive listing for the store.</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-lg bg-card">
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Brand</label>
-                        <input name="brand" required placeholder="Apple" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Model</label>
-                        <input name="model" required placeholder="iPhone 13" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Basic Info */}
+                    <Card>
+                        <CardContent className="pt-6 space-y-4">
+                            <h3 className="font-semibold text-lg">Basic Information</h3>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Brand</Label>
+                                    <Input name="brand" required placeholder="Apple" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Model</Label>
+                                    <Input name="model" required placeholder="iPhone 13 Pro" />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Variant (Storage)</Label>
+                                    <Input name="variant" required placeholder="256GB" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Condition</Label>
+                                    <Select name="condition" defaultValue="New">
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select condition" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="New">New</SelectItem>
+                                            <SelectItem value="Refurbished">Refurbished</SelectItem>
+                                            <SelectItem value="Used">Used</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Price (USD)</Label>
+                                    <Input name="price" type="number" required placeholder="999" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Status</Label>
+                                    <Select name="status" defaultValue="in_stock">
+                                        <SelectTrigger>
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="in_stock">In Stock</SelectItem>
+                                            <SelectItem value="limited">Limited</SelectItem>
+                                            <SelectItem value="sold">Sold Out</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label>Colors (comma separated)</Label>
+                                <Input
+                                    value={colorInput}
+                                    onChange={(e) => setColorInput(e.target.value)}
+                                    placeholder="Blue, Graphite, Silver"
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Media & Details */}
+                    <Card>
+                        <CardContent className="pt-6 space-y-4">
+                            <h3 className="font-semibold text-lg">Details & Media</h3>
+
+                            <div className="space-y-2">
+                                <Label>Description</Label>
+                                <Textarea
+                                    name="description"
+                                    required
+                                    placeholder="Detailed product description..."
+                                    className="min-h-[120px]"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label>Image URLs</Label>
+                                <div className="space-y-2">
+                                    {imageUrls.map((url, idx) => (
+                                        <div key={idx} className="flex gap-2">
+                                            <Input
+                                                value={url}
+                                                onChange={(e) => updateImageUrl(idx, e.target.value)}
+                                                placeholder={idx === 0 ? "Main Image URL" : "Gallery Image URL"}
+                                            />
+                                            {imageUrls.length > 1 && (
+                                                <Button type="button" variant="ghost" size="icon" onClick={() => removeImageUrl(idx)}>
+                                                    <X className="w-4 h-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    ))}
+                                    <Button type="button" variant="outline" size="sm" onClick={addImageUrl} className="w-full">
+                                        <Plus className="w-4 h-4 mr-2" /> Add Image
+                                    </Button>
+                                    <p className="text-xs text-muted-foreground">First image will be the main cover image.</p>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Variant (RAM/Storage)</label>
-                        <input name="variant" required placeholder="128GB" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Condition</label>
-                        <select name="condition" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                            <option value="New">New</option>
-                            <option value="Used - Grade A">Used - Grade A</option>
-                            <option value="Used - Grade B">Used - Grade B</option>
-                            <option value="Refurbished">Refurbished</option>
-                        </select>
-                    </div>
+                <div className="flex justify-end">
+                    <Button type="submit" disabled={loading} size="lg" className="w-full md:w-auto">
+                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        Create Listing
+                    </Button>
                 </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Price (USD)</label>
-                        <input name="price" type="number" required placeholder="999" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Status</label>
-                        <select name="status" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                            <option value="in_stock">In Stock</option>
-                            <option value="limited">Limited</option>
-                            <option value="request">Request Only</option>
-                            <option value="sold">Sold Out</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">Image URL</label>
-                    <input name="image_url" placeholder="https://..." className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-                >
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Create Listing
-                </button>
             </form>
         </div>
     );

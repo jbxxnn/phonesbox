@@ -3,6 +3,7 @@ import { Outfit } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { BottomNav } from "@/components/bottom-nav";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 import { Suspense } from "react";
 import "./globals.css";
 
@@ -43,6 +44,7 @@ export default function RootLayout({
           <Suspense fallback={null}>
             <BottomNav />
           </Suspense>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

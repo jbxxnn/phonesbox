@@ -11,6 +11,10 @@ export type Phone = {
     seller_region?: string;
     internal_notes?: string;
     image_url?: string;
+    description?: string;
+    images?: string[];
+    colors?: string[];
+    specs?: Record<string, any>;
 };
 
 export type Inquiry = {

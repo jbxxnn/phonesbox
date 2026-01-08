@@ -23,6 +23,20 @@ export function StoreDashboard({
 
     // Sync local state with URL param
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q")?.toString() || "");
+    const [priceFilter, setPriceFilter] = useState<string>("all");
+
+    // Dynamic price config based on currency
+    const isNGN = currency === 'NGN';
+    const thresholds = isNGN
+        ? { budget: 500000, premium: 1000000, labelBudget: '500k', labelPremium: '1m' }
+        : { budget: 500, premium: 1000, labelBudget: '500', labelPremium: '1000' };
+
+    const PRICE_RANGES = [
+        { id: 'all', label: 'All' },
+        { id: 'budget', label: `Budget (<${thresholds.labelBudget})` },
+        { id: 'mid', label: `Mid-Range (${thresholds.labelBudget}-${thresholds.labelPremium})` },
+        { id: 'premium', label: `Premium (${thresholds.labelPremium}+)` },
+    ];
 
     // Update local state when URL changes (e.g. from desktop navbar)
     useEffect(() => {
@@ -131,13 +145,46 @@ export function StoreDashboard({
 
                 {/* Latest Phones (New Condition Only) - Hidden when searching */}
                 {!searchQuery && (
-                    <section className="space-y-4">
-                        <div className="flex items-center justify-between">
-                            <h3 className="font-bold text-lg">Latest Phones</h3>
-                            <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700">See All</Link>
-                        </div>
-                        <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} />
-                    </section>
+                    <>
+                        <section className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <h3 className="font-bold text-lg">Latest Phones</h3>
+                                <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700">See All</Link>
+                            </div>
+                            <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} />
+                        </section>
+
+                        {/* Shop by Price */}
+                        <section className="space-y-6 pt-4">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <h3 className="font-bold text-lg">Shop by Price</h3>
+                                <div className="flex p-1 bg-slate-100 rounded-lg overflow-x-auto">
+                                    {PRICE_RANGES.map((range) => (
+                                        <button
+                                            key={range.id}
+                                            onClick={() => setPriceFilter(range.id)}
+                                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${priceFilter === range.id
+                                                ? 'bg-white text-blue-600 shadow-sm'
+                                                : 'text-muted-foreground hover:text-foreground'
+                                                }`}
+                                        >
+                                            {range.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <PhoneGrid
+                                phones={initialPhones.filter(phone => {
+                                    if (priceFilter === 'budget') return phone.price < thresholds.budget;
+                                    if (priceFilter === 'mid') return phone.price >= thresholds.budget && phone.price <= thresholds.premium;
+                                    if (priceFilter === 'premium') return phone.price > thresholds.premium;
+                                    return true;
+                                })}
+                                currency={currency}
+                            />
+                        </section>
+                    </>
                 )}
             </div>
         </div>

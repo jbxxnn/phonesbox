@@ -19,15 +19,19 @@ export default function Home() {
   return (
     <main className="min-h-screen pb-24 md:pb-12">
       {/* ... keeping header ... */}
-      <div className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md px-5 py-3 flex items-center gap-4">
+      <div className="md:hidden sticky top-0 z-40 bg-background/10 backdrop-blur-md px-5 py-3 flex items-center gap-4">
+        <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white hover:bg-slate-100 transition-colors">
+          <ShoppingBag className="w-5 h-5 text-foreground" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full ring-2 ring-white"></span>
+        </button>
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <div className="w-full h-10 bg-slate-100 rounded-full flex items-center px-10 text-sm text-muted-foreground">
+          <div className="w-full h-10 bg-white rounded-full flex items-center px-10 text-sm text-muted-foreground">
             Search
           </div>
           <Camera className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         </div>
-        <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-slate-100/50 hover:bg-slate-100 transition-colors">
+        <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white hover:bg-slate-100 transition-colors">
           <ShoppingBag className="w-5 h-5 text-foreground" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full ring-2 ring-white"></span>
         </button>

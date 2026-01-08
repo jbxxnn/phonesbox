@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { Search, ShoppingBag, User } from "lucide-react";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 export function Navbar() {
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
     return (
         <header className="hidden md:block sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -35,6 +40,17 @@ export function Navbar() {
                         <input
                             type="search"
                             placeholder="Search phones..."
+                            defaultValue={searchParams.get("q") || ""}
+                            onChange={(e) => {
+                                const term = e.target.value;
+                                const params = new URLSearchParams(searchParams);
+                                if (term) {
+                                    params.set("q", term);
+                                } else {
+                                    params.delete("q");
+                                }
+                                replace(`${pathname}?${params.toString()}`);
+                            }}
                             className="w-full h-9 rounded-full bg-slate-100 border-none pl-9 pr-4 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all placeholder:text-muted-foreground/70"
                         />
                     </div>

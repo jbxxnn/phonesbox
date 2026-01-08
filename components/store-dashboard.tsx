@@ -61,7 +61,7 @@ export function StoreDashboard({
     );
 
     return (
-        <div className="min-h-screen pb-24 md:pb-12 space-y-8">
+        <div className="min-h-screen bg-slate-50 pb-24 space-y-8">
             {/* Mobile Header with Search */}
             <div className="md:hidden sticky top-0 z-40 bg-background/10 backdrop-blur-md px-5 py-3 flex items-center gap-4 border-b">
                 <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">

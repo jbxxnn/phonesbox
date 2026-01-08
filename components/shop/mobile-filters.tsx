@@ -24,7 +24,7 @@ export function MobileFilterDrawer() {
                     />
 
                     {/* Drawer Content */}
-                    <div className="relative w-full max-w-xs h-full bg-background p-6 shadow-xl animate-in slide-in-from-left duration-300 ml-auto sm:ml-0 flex flex-col">
+                    <div className="relative w-[85vw] max-w-xs h-full bg-background p-6 shadow-xl animate-in slide-in-from-left duration-300 mr-auto flex flex-col">
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-lg font-bold">Filters</h2>
                             <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)}>

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Navbar } from "./navbar";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
+
 export function StoreDashboard({
     initialPhones,
     currency
@@ -119,11 +120,11 @@ export function StoreDashboard({
                 {/* Flash Deals / Latest Listings */}
                 <section className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-lg">
+                        <h3 className="font-bold text-lg" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px' }}>
                             {searchQuery ? `Results for "${searchQuery}"` : "Flash Deals for You"}
                         </h3>
                         {!searchQuery && (
-                            <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700">See All</Link>
+                            <Link href="#" className="bg-white px-2 py-1 rounded-full border border-blue-600 text-xs font-semibold text-blue-600 hover:text-white hover:bg-blue-600 hover:border-blue-600 shrink-0" style={{ border: '0.5px solid blue' }}>See All</Link>
                         )}
                     </div>
 
@@ -146,25 +147,33 @@ export function StoreDashboard({
                 {/* Latest Phones (New Condition Only) - Hidden when searching */}
                 {!searchQuery && (
                     <>
-                        <section className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <h3 className="font-bold text-lg">Latest Phones</h3>
-                                <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-700">See All</Link>
+                        <section className="space-y-4 py-8 px-4 rounded-lg"
+                            style={{ background: 'linear-gradient(to left, #d3dceeff, #c4d4f5ff)' }}
+                        >
+                            <div
+                                className="flex items-center justify-between gap-2 py-2 p-4 text-white"
+                            >
+                                <h3 className="font-bold text-lg shrink-0" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px' }}>New items for You</h3>
+                                <div className="h-px bg-white/50 flex-1 mx-2" />
+                                <Link href="#" className="bg-white px-2 py-1 rounded-full border border-blue-600 text-xs font-semibold text-blue-600 hover:text-white hover:bg-blue-600 hover:border-blue-600 shrink-0" style={{ border: '0.5px solid blue' }}>See All</Link>
                             </div>
                             <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} />
                         </section>
 
+
+                        <div className="h-12" />
+
                         {/* Shop by Price */}
-                        <section className="space-y-6 pt-4">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                <h3 className="font-bold text-lg">Shop by Price</h3>
-                                <div className="flex p-1 bg-slate-100 rounded-lg overflow-x-auto">
+                        <section className="space-y-6">
+                            <div className="flex items-center justify-between gap-4">
+                                <h3 className="font-bold text-lg" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px' }}>Shop by Price</h3>
+                                <div className="flex p-1 bg-slate-100 rounded-full overflow-x-auto gap-2 border border-slate-200">
                                     {PRICE_RANGES.map((range) => (
                                         <button
                                             key={range.id}
                                             onClick={() => setPriceFilter(range.id)}
-                                            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all whitespace-nowrap ${priceFilter === range.id
-                                                ? 'bg-white text-blue-600 shadow-sm'
+                                            className={`px-6 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${priceFilter === range.id
+                                                ? 'bg-white text-blue-600 shadow-sm border border-blue'
                                                 : 'text-muted-foreground hover:text-foreground'
                                                 }`}
                                         >

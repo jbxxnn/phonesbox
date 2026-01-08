@@ -7,6 +7,15 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
     const isAvailable = phone.availability_status === 'in_stock';
     const displayCurrency = currency || phone.currency;
 
+    // Helper to get color for condition
+    const getConditionStyle = (condition: string): React.CSSProperties | undefined => {
+        const c = condition.toLowerCase().trim();
+        if (c === 'new') return { backgroundColor: '#2563eb', color: 'white', borderColor: 'transparent' }; // blue-600
+        if (c.includes('refurbished')) return { backgroundColor: '#16a34a', color: 'white', borderColor: 'transparent' }; // green-600
+        if (c.includes('used') || c.includes('grade')) return { backgroundColor: '#ea580c', color: 'white', borderColor: 'transparent' }; // orange-600
+        return undefined;
+    };
+
     return (
         <Link href={`/phones/${phone.id}`} className="group block">
             <div className="border rounded-xl overflow-hidden bg-card text-card-foreground shadow-sm transition-all hover:shadow-md hover:scale-[1.02]">
@@ -24,7 +33,10 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
                     )}
 
                     <div className="absolute top-2 right-2">
-                        <Badge variant={isAvailable ? "default" : "secondary"}>
+                        <Badge
+                            className="font-medium hover:opacity-90 transition-opacity"
+                            style={getConditionStyle(phone.condition)}
+                        >
                             {phone.condition}
                         </Badge>
                     </div>

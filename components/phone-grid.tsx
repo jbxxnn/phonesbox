@@ -1,10 +1,11 @@
 import { Phone } from "@/lib/types";
 import { PhoneCard } from "./phone-card";
 
-export function PhoneGrid({ phones, currency, mobileLayout = 'grid' }: {
+export function PhoneGrid({ phones, currency, mobileLayout = 'grid', mobileColumns = 2 }: {
     phones: Phone[],
     currency?: string,
-    mobileLayout?: 'grid' | 'slider'
+    mobileLayout?: 'grid' | 'slider',
+    mobileColumns?: 1 | 2
 }) {
     if (!phones || phones.length === 0) {
         return (
@@ -42,7 +43,7 @@ export function PhoneGrid({ phones, currency, mobileLayout = 'grid' }: {
     }
 
     return (
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <div className={`grid ${mobileColumns === 1 ? 'grid-cols-1' : 'grid-cols-2'} sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4`}>
             {phones.map((phone) => (
                 <PhoneCard key={phone.id} phone={phone} currency={currency} />
             ))}

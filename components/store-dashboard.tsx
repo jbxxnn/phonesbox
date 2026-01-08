@@ -117,6 +117,8 @@ export function StoreDashboard({
                     </>
                 )}
 
+                <div className="h-10" />
+
                 {/* Flash Deals / Latest Listings */}
                 <section className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -157,7 +159,7 @@ export function StoreDashboard({
                                 <div className="h-px bg-white/50 flex-1 mx-2" />
                                 <Link href="#" className="bg-white px-2 py-1 rounded-full border border-blue-600 text-xs font-semibold text-blue-600 hover:text-white hover:bg-blue-600 hover:border-blue-600 shrink-0" style={{ border: '0.5px solid blue' }}>See All</Link>
                             </div>
-                            <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} />
+                            <PhoneGrid phones={initialPhones.filter(p => p.condition.toLowerCase() === 'new')} currency={currency} mobileColumns={1} />
                         </section>
 
 
@@ -165,9 +167,9 @@ export function StoreDashboard({
 
                         {/* Shop by Price */}
                         <section className="space-y-6">
-                            <div className="flex items-center justify-between gap-4">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                                 <h3 className="font-bold text-lg" style={{ background: 'linear-gradient(to left, #90adecff, #f79a69ff)', color: 'white', padding: '5px 10px', borderRadius: '30px' }}>Shop by Price</h3>
-                                <div className="flex p-1 bg-slate-100 rounded-full overflow-x-auto gap-2 border border-slate-200">
+                                <div className="flex p-1 bg-slate-100 rounded-full overflow-x-auto gap-2 border border-slate-200 w-full sm:w-auto max-w-full">
                                     {PRICE_RANGES.map((range) => (
                                         <button
                                             key={range.id}

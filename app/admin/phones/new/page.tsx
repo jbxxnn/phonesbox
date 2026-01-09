@@ -175,7 +175,7 @@ export default function NewPhonePage() {
                                             )}
                                         </div>
                                     ))}
-                                    <Button type="button" variant="outline" size="sm" onClick={addImageUrl} className="w-full">
+                                    <Button type="button" variant="outline" size="sm" onClick={addImageUrlField} className="w-full">
                                         <Plus className="w-4 h-4 mr-2" /> Add Image
                                     </Button>
                                     <p className="text-xs text-muted-foreground">First image will be the main cover image.</p>

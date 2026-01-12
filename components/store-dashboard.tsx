@@ -11,6 +11,8 @@ import { MobileNavbar } from "./mobile-navbar";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 
+import { TrendingDeals } from "./trending-deals";
+
 export function StoreDashboard({
     initialPhones,
     currency
@@ -71,8 +73,9 @@ export function StoreDashboard({
                 {/* Hero & Categories - Hidden when searching */}
                 {!searchQuery && (
                     <>
-                        <section>
+                        <section className="space-y-8">
                             <HeroBanner />
+                            <TrendingDeals phones={initialPhones} currency={currency} />
                         </section>
 
                         <section className="space-y-4">

@@ -15,6 +15,7 @@ export type Phone = {
     images?: string[];
     colors?: string[];
     specs?: Record<string, any>;
+    compare_at_price?: number;
 };
 
 export type Inquiry = {

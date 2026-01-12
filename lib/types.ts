@@ -12,6 +12,7 @@ export type Phone = {
     internal_notes?: string;
     image_url?: string;
     description?: string;
+    storage?: string;
     images?: string[];
     colors?: string[];
     specs?: Record<string, any>;

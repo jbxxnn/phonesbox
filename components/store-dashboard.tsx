@@ -12,6 +12,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 
 import { TrendingDeals } from "./trending-deals";
+import { TopDeals } from "./top-deals";
 
 export function StoreDashboard({
     initialPhones,
@@ -76,6 +77,7 @@ export function StoreDashboard({
                         <section className="space-y-8">
                             <HeroBanner />
                             <TrendingDeals phones={initialPhones} currency={currency} />
+                            <TopDeals phones={initialPhones} currency={currency} />
                         </section>
 
                         <section className="space-y-4">

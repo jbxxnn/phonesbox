@@ -78,6 +78,18 @@
   }
 }
 
+@layer utilities {
+  .bg-charcoal {
+    background-color: #101010;
+  }
+}
+
+@layer utilities {
+  .bg-charcoal {
+    background-color: #101010;
+  }
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

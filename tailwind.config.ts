@@ -12,6 +12,12 @@ export default {
     extend: {
       colors: {
         charcoal: "#101010",
+        space_indigo: '#2b2d42',
+        lavender_grey: '#8d99ae',
+        platinum: '#edf2f4',
+        punch_red: '#ef233c',
+        flag_red: '#d90429',
+
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

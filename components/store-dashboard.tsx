@@ -5,9 +5,9 @@ import { Phone } from "@/lib/types";
 import { PhoneGrid } from "@/components/phone-grid";
 import { HeroBanner } from "@/components/hero-banner";
 import { Categories } from "@/components/categories";
-import { Search, ShoppingBag, Camera } from "lucide-react";
+// import { Search, ShoppingBag, Camera } from "lucide-react"; // Icons retired with inline header
 import Link from "next/link";
-import { Navbar } from "./navbar";
+import { MobileNavbar } from "./mobile-navbar";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 
@@ -63,39 +63,8 @@ export function StoreDashboard({
     return (
         <div className="min-h-screen bg-slate-50 pb-24 space-y-8">
             {/* Mobile Header with Search */}
-            <div className="md:hidden sticky top-0 z-40 bg-background/10 backdrop-blur-md px-5 py-3 flex items-center gap-4 border-b">
-                <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors">
-                    <ShoppingBag className="w-5 h-5 text-foreground" />
-                    <span className="absolute top-2 right-2 w-2 h-2 bg-blue-500 rounded-full ring-2 ring-white"></span>
-                </button>
-                <div className="flex-1 relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <input
-                        type="text"
-                        placeholder="Search phones..."
-                        value={searchQuery}
-                        onChange={(e) => handleSearch(e.target.value)}
-                        className="w-full h-10 bg-white rounded-full pl-10 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all placeholder:text-muted-foreground"
-                    />
-                    {searchQuery ? (
-                        <button
-                            onClick={() => handleSearch("")}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-slate-200"
-                        >
-                            <span className="sr-only">Clear</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 text-muted-foreground"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
-                        </button>
-                    ) : (
-                        <Camera className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    )}
-                </div>
-                <button className="relative w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors md:hidden">
-                    {/* Placeholder for user/menu */}
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xs">
-                        JD
-                    </div>
-                </button>
-            </div>
+            {/* Mobile Navbar */}
+            <MobileNavbar />
 
             <div className="px-5 md:container md:mx-auto md:px-4 space-y-8 pt-2 md:pt-8 min-h-[50vh]">
 

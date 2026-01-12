@@ -61,7 +61,7 @@ export function StoreDashboard({
     );
 
     return (
-        <div className="min-h-screen bg-slate-50 pb-24 space-y-8">
+        <div className="min-h-screen bg-slate-50 pb-24 space-y-8 pt-[110px] md:pt-0">
             {/* Mobile Header with Search */}
             {/* Mobile Navbar */}
             <MobileNavbar />

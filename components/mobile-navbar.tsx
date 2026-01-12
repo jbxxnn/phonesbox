@@ -39,7 +39,7 @@ export function MobileNavbar() {
     };
 
     return (
-        <div className="md:hidden sticky top-0 z-50 bg-charcoal text-white shadow-md">
+        <div className="md:hidden fixed top-0 left-0 w-full z-50 bg-charcoal text-white shadow-md">
             {/* Top Row: Menu, Logo, Search, Cart */}
             <div className="flex items-center justify-between px-4 py-3 gap-3">
                 {/* Left: Menu & Logo */}

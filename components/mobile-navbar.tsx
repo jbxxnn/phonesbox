@@ -58,13 +58,13 @@ export function MobileNavbar() {
                     <div className="relative w-full h-9">
                         <input
                             type="text"
-                            placeholder="Search Best Buy"
+                            placeholder="Search for items..."
                             value={searchQuery}
                             onChange={(e) => handleSearch(e.target.value)}
-                            className="w-full h-full rounded-md bg-white text-black pl-3 pr-8 text-sm outline-none placeholder:text-gray-500"
+                            className="w-full h-full rounded-md bg-white text-black pl-3 pr-8 text-base outline-none placeholder:text-gray-500"
                         />
                         <div className="absolute right-0 top-0 h-full w-8 flex items-center justify-center">
-                            <Search className="w-4 h-4 text-gray-500" />
+                            <HugeiconsIcon icon={Search02Icon} size={24} />
                         </div>
                     </div>
                 </div>

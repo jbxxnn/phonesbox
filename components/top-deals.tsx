@@ -35,7 +35,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                 {/* Desktop: Fixed width left sidebar */}
                 <div className="
                     w-full md:w-[240px] md:min-w-[240px] md:h-auto
-                    bg-gradient-to-br from-blue-700 to-teal-400
+                    bg-gradient-to-br from-charcoal to-teal-400
                     text-white rounded-lg p-6
                     flex flex-col justify-center items-center text-center
                     relative overflow-hidden
@@ -101,14 +101,9 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
 
                                     {/* Content */}
                                     <div className="space-y-1">
-                                        <h3 className="text-sm text-slate-900 font-medium leading-tight line-clamp-2 h-10 mb-2">
+                                        <h3 className="text-sm text-slate-900 font-medium leading-tight line-clamp-2 mb-2">
                                             {phone.brand} {phone.model} {phone.storage}
                                         </h3>
-
-                                        <div className="text-[10px] font-bold text-slate-900">
-                                            Winter Sale Deal
-                                        </div>
-
                                         <div className="space-y-0.5">
                                             <div className="text-lg font-bold text-slate-900">
                                                 {formatPrice(phone.price)}

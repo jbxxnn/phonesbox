@@ -98,12 +98,11 @@ export function TrendingDeals({ phones, currency = 'USD' }: TrendingDealsProps) 
                                 <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
                                     {phone.brand}
                                 </p>
-                                <h3 className="text-sm font-medium text-slate-900 leading-tight line-clamp-2 h-10" title={phone.model}>
+                                <h3 className="text-sm font-medium text-slate-900 leading-tight line-clamp-2" title={phone.model}>
                                     {phone.model} - {phone.variant} - {phone.condition}
                                 </h3>
 
                                 <div className="pt-1">
-                                    <p className="text-[10px] font-bold text-slate-900">Winter Sale Deal</p>
                                     <div className="flex items-baseline gap-2">
                                         <span className="text-lg font-bold text-slate-900">
                                             {formatPrice(phone.price)}

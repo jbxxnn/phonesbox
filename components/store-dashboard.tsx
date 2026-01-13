@@ -79,15 +79,6 @@ export function StoreDashboard({
                             <TrendingDeals phones={initialPhones} currency={currency} />
                             <TopDeals phones={initialPhones} currency={currency} />
                         </section>
-
-                        <section className="space-y-4">
-                            <div className="flex items-center justify-center">
-                                <h3 className="font-bold text-lg">Categories</h3>
-                            </div>
-                            <div className="flex items-center justify-center">
-                                <Categories />
-                            </div>
-                        </section>
                     </>
                 )}
 

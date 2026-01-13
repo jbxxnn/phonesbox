@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning style={{ backgroundColor: "#dbeafe" }}>
-      <body className={`${outfit.className} antialiased bg-gradient-to-b from-blue-100 via-blue-50 to-white min-h-screen text-slate-900`}>
+      <body className={`${outfit.className} antialiased min-h-screen text-slate-900`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

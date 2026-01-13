@@ -42,7 +42,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                     min-h-[120px] md:min-h-[300px]
                 ">
                     <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-2">
-                        <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
+                        <h2 className="text-lg md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
                             Top<br />Deals
                         </h2>
 

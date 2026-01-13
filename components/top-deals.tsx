@@ -27,7 +27,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
         .slice(0, 8); // Take top 8
 
     return (
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden p-6">
+        <div className="bg-white rounded-none md:rounded-xl shadow-none md:shadow-sm overflow-hidden p-6">
             <div className="flex flex-col md:flex-row gap-6">
 
                 {/* Banner Section */}
@@ -35,15 +35,15 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                 {/* Desktop: Fixed width left sidebar */}
                 <div className="
                     w-full md:w-[240px] md:min-w-[240px] md:h-auto
-                    bg-gradient-to-br from-charcoal to-teal-400
-                    text-white rounded-lg p-6
-                    flex flex-col justify-center items-center text-center
+                    bg-gradient-to-br from-teal-400 to-charcoal
+                    text-white rounded-none md:rounded-lg p-6
+                    flex flex-col justify-center items-start md:items-center text-center
                     relative overflow-hidden
-                    min-h-[120px] md:min-h-[300px]
+                    min-h-[20px] md:min-h-[300px]
                 ">
                     <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-2">
                         <h2 className="text-lg md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
-                            Top<br />Deals
+                            Top <span className="font-light">Deals</span>
                         </h2>
 
                         {/* Desktop "See all" button hidden on mobile for this layout position, 
@@ -63,7 +63,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
 
                 {/* Products Slider */}
                 <div className="flex-1 overflow-x-auto no-scrollbar">
-                    <div className="flex gap-4 pb-4 px-1 min-w-min">
+                    <div className="flex gap-4 pb-4 px-0 md:px-1 min-w-min">
                         {dealPhones.map((phone) => {
                             const comparePrice = phone.compare_at_price || phone.price * 1.2; // Fallback for demo if missing
                             const savings = comparePrice - phone.price;

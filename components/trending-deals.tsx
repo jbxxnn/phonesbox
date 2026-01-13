@@ -33,7 +33,7 @@ export function TrendingDeals({ phones, currency = 'USD' }: TrendingDealsProps) 
     const trendingPhones = phones.slice(0, 10);
 
     return (
-        <div className="bg-white rounded-xl p-6 space-y-6 shadow-sm">
+        <div className="bg-white rounded-none md:rounded-xl p-6 space-y-6 shadow-none md:shadow-sm">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <h2 className="text-xl md:text-2xl font-bold text-slate-900">Trending deals</h2>

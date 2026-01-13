@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function HeroBanner() {
     return (
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 px-5 md:px-0">
             {/* Left Card: Top Deals */}
             <div className="relative overflow-hidden rounded-xl h-[300px] md:h-[400px] p-8 flex flex-col justify-center items-start bg-gradient-to-r from-[#0046be] to-[#00c3e3]">
                 <div className="relative z-10 font-bold leading-tight">

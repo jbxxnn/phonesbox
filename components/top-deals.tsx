@@ -44,7 +44,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                     min-h-[20px] md:min-h-[250px]
                 ">
                             <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-2">
-                                <h2 className="text-lg md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
+                                <h2 className="text-2xl md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
                                     Top <span className="font-light">Deals</span>
                                 </h2>
 
@@ -59,7 +59,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                     <div className="hidden md:block mt-4 w-full text-center">
                         <Link
                             href="/deals"
-                            className="block w-full py-3 bg-white text-slate-900 font-bold text-sm border border-space_indigo rounded-sm hover:bg-space_indigo hover:text-white transition-colors"
+                            className="block w-full py-3 bg-white text-blue-700 font-bold text-sm border border-blue-700 rounded-full hover:bg-space_indigo hover:text-white hover:border hover:border-space_indigo transition-colors"
                         >
                             See all Top Deals
                         </Link>
@@ -76,7 +76,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                             return (
                                 <div
                                     key={phone.id}
-                                    className="min-w-[180px] w-[180px] md:min-w-[220px] md:w-[220px] flex-none group border border-slate-100 rounded-xl p-3 hover:shadow-md transition-shadow bg-white relative"
+                                    className="min-w-[180px] w-[180px] md:min-w-[220px] md:w-[220px] flex-none group rounded-xl bg-white relative"
                                 >
                                     {/* Save Badge */}
                                     <div className="absolute top-3 left-3 z-10 bg-red-600 text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded">
@@ -89,7 +89,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                                     </button>
 
                                     {/* Image */}
-                                    <div className="relative aspect-square mb-3 mt-4">
+                                    <div className="relative aspect-square mb-3 mt-0">
                                         {(phone.images?.[0] || phone.image_url) ? (
                                             <Image
                                                 src={phone.images?.[0] || phone.image_url || ''}

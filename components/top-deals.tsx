@@ -33,32 +33,37 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                 {/* Banner Section */}
                 {/* Mobile: Full width top banner */}
                 {/* Desktop: Fixed width left sidebar */}
-                <div className="
+                <div className="">
+                    <div className="bg-charcoal p-2">
+                        <div className="
                     w-full md:w-[240px] md:min-w-[240px] md:h-auto
-                    bg-gradient-to-br from-teal-400 to-charcoal
-                    text-white rounded-none md:rounded-lg p-6
+                    bg-gradient-to-br from-punch_red to-space_indigo
+                    text-white rounded-none p-4
                     flex flex-col justify-center items-start md:items-center text-center
                     relative overflow-hidden
-                    min-h-[20px] md:min-h-[300px]
+                    min-h-[20px] md:min-h-[250px]
                 ">
-                    <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-2">
-                        <h2 className="text-lg md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
-                            Top <span className="font-light">Deals</span>
-                        </h2>
+                            <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-2">
+                                <h2 className="text-lg md:text-5xl font-black tracking-tighter uppercase leading-none text-yellow-300 drop-shadow-sm">
+                                    Top <span className="font-light">Deals</span>
+                                </h2>
 
-                        {/* Desktop "See all" button hidden on mobile for this layout position, 
+                                {/* Desktop "See all" button hidden on mobile for this layout position, 
                             or we can keep it if it fits. The mockup shows it inside the box on desktop. */}
-                        <div className="hidden md:block mt-8 w-full">
-                            <Link
-                                href="/deals"
-                                className="block w-full py-3 bg-white text-slate-900 font-bold text-sm rounded-lg hover:bg-slate-50 transition-colors"
-                            >
-                                See all Top Deals
-                            </Link>
+
+                            </div>
+
+                            {/* Decorative circles/overlay could go here to match image noise/gradient style more closely */}
                         </div>
                     </div>
-
-                    {/* Decorative circles/overlay could go here to match image noise/gradient style more closely */}
+                    <div className="hidden md:block mt-4 w-full text-center">
+                        <Link
+                            href="/deals"
+                            className="block w-full py-3 bg-white text-slate-900 font-bold text-sm border border-space_indigo rounded-sm hover:bg-space_indigo hover:text-white transition-colors"
+                        >
+                            See all Top Deals
+                        </Link>
+                    </div>
                 </div>
 
                 {/* Products Slider */}

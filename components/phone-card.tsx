@@ -2,9 +2,10 @@ import Link from "next/link";
 import { cn, formatPrice } from "@/lib/utils";
 import { Phone } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
+import { Heart } from "lucide-react";
+import Image from "next/image";
 
 export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string }) {
-    const isAvailable = phone.availability_status === 'in_stock';
     const displayCurrency = currency || phone.currency;
 
     // Helper to get color for condition
@@ -17,47 +18,82 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
     };
 
     return (
-        <Link href={`/phones/${phone.id}`} className="group block">
-            <div className="border rounded-xl overflow-hidden bg-card text-card-foreground shadow-sm transition-all hover:shadow-md hover:scale-[1.02]">
-                <div className="aspect-[4/3] bg-muted relative overflow-hidden">
-                    {phone.image_url ? (
-                        <img
-                            src={phone.image_url}
-                            alt={`${phone.brand} ${phone.model}`}
-                            className="object-cover w-full h-full transition-transform group-hover:scale-105"
-                        />
-                    ) : (
-                        <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-secondary/30">
-                            <span className="text-sm">No Image</span>
-                        </div>
-                    )}
+        <Link href={`/phones/${phone.id}`} className="group block h-full">
+            <div className="bg-white rounded-xl overflow-hidden h-full flex flex-col p-4 transition-all hover:shadow-lg border border-transparent hover:border-slate-200">
+                {/* Image Container */}
+                <div className="relative aspect-square mb-4 rounded-lg overflow-hidden bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors">
+                    {/* Heart Button */}
+                    <button className="absolute top-2 right-2 z-10 p-2 text-slate-400 hover:text-blue-600 transition-colors bg-white/80 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Heart className="w-4 h-4" />
+                    </button>
 
-                    <div className="absolute top-2 right-2">
+                    {/* Rank/Badge - Optional, reusing condition for now */}
+                    <div className="absolute top-2 left-2 z-10">
                         <Badge
-                            className="font-medium hover:opacity-90 transition-opacity"
+                            className="font-bold text-[10px] uppercase tracking-wider px-2 py-0.5 shadow-sm"
                             style={getConditionStyle(phone.condition)}
                         >
                             {phone.condition}
                         </Badge>
                     </div>
+
+                    {phone.images && phone.images.length > 0 ? (
+                        <div className="relative w-full h-full p-4">
+                            <Image
+                                src={phone.images[0]}
+                                alt={`${phone.brand} ${phone.model}`}
+                                fill
+                                className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                            />
+                        </div>
+                    ) : phone.image_url ? (
+                        <div className="relative w-full h-full p-4">
+                            <img
+                                src={phone.image_url}
+                                alt={`${phone.brand} ${phone.model}`}
+                                className="object-contain w-full h-full mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
+                            />
+                        </div>
+                    ) : (
+                        <div className="flex flex-col items-center justify-center text-slate-400">
+                            <span className="text-xs">No Image</span>
+                        </div>
+                    )}
                 </div>
 
-                <div className="p-4 space-y-2">
-                    <div className="flex justify-between items-start">
-                        <div>
-                            <h3 className="font-semibold text-lg leading-none">{phone.model}</h3>
-                            <p className="text-sm text-muted-foreground mt-1">{phone.brand} • {phone.variant}</p>
-                        </div>
-                    </div>
+                {/* Content */}
+                <div className="flex-1 flex flex-col space-y-2">
+                    <p className="text-[10px] uppercase tracking-wider font-bold text-slate-500">
+                        {phone.brand}
+                    </p>
 
-                    <div className="pt-2 flex items-center justify-between">
-                        <div className="font-bold text-xl">
-                            {formatPrice(phone.price, displayCurrency)}
-                        </div>
-                        {phone.availability_status !== 'in_stock' && (
-                            <span className="text-xs font-medium text-amber-600 px-2 py-1 bg-amber-50 rounded-full border border-amber-200">
-                                {phone.availability_status.replace('_', ' ')}
+                    <h3 className="font-medium text-slate-900 leading-tight line-clamp-2 min-h-[2.5rem]" title={`${phone.brand} ${phone.model}`}>
+                        {phone.brand} {phone.model} {phone.storage ? `- ${phone.storage}` : ''}
+                    </h3>
+
+                    {/* Spacer to push price to bottom */}
+                    <div className="flex-1" />
+
+                    <div className="space-y-1 pt-2">
+                        {phone.compare_at_price && (
+                            <p className="text-[10px] font-bold text-slate-900">Winter Sale Deal</p>
+                        )}
+
+                        <div className="flex items-baseline flex-wrap gap-2">
+                            <span className="text-lg font-bold text-slate-900">
+                                {formatPrice(phone.price, displayCurrency)}
                             </span>
+                            {phone.compare_at_price && (
+                                <span className="text-xs text-slate-500 line-through decoration-slate-400">
+                                    {formatPrice(phone.compare_at_price, displayCurrency)}
+                                </span>
+                            )}
+                        </div>
+
+                        {phone.availability_status !== 'in_stock' && (
+                            <p className="text-xs text-amber-600 font-medium">
+                                {phone.availability_status.replace('_', ' ')}
+                            </p>
                         )}
                     </div>
                 </div>
@@ -65,3 +101,4 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
         </Link>
     );
 }
+

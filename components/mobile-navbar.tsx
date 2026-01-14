@@ -48,7 +48,7 @@ export function MobileNavbar() {
                         <HugeiconsIcon icon={Menu02Icon} size={24} />
                     </button>
                     <Link href="/" className="font-bold text-xl tracking-tight flex items-center">
-                        <span className="text-white" style={{ fontSize: '1.25rem' }}>PHONE</span>
+                        <span className="text-white" style={{ fontSize: '1.25rem' }}>P</span>
                         <span className="bg-[#ffeb3b] text-black px-1 ml-0.5 rounded-sm text-[0.6rem] font-bold h-4 flex items-center leading-none self-start mt-1">BOX</span>
                     </Link>
                 </div>

@@ -37,7 +37,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                     <div className="bg-yellow-300 p-2">
                         <div className="
                     w-full md:w-[240px] md:min-w-[240px] md:h-auto
-                    bg-gradient-to-br from-punch_red to-[#0046be]
+                    bg-gradient-to-br from-[#00c3e3] to-[#0046be]
                     text-white rounded-none p-4
                     flex flex-col justify-center items-start md:items-center text-center
                     relative overflow-hidden
@@ -76,48 +76,56 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                             return (
                                 <div
                                     key={phone.id}
-                                    className="min-w-[180px] w-[180px] md:min-w-[220px] md:w-[220px] flex-none group rounded-xl bg-white relative"
+                                    className="min-w-[180px] w-[180px] md:min-w-[220px] md:w-[220px] flex-none snap-start"
                                 >
-                                    {/* Save Badge */}
-                                    <div className="absolute top-3 left-3 z-10 bg-red-600 text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded">
-                                        Save {formatPrice(savings).replace(/\.00$/, '')}
-                                    </div>
+                                    <Link href={`/phones/${phone.id}`} className="block group rounded-xl bg-white relative h-full">
+                                        {/* Save Badge */}
+                                        <div className="absolute top-3 left-3 z-10 bg-red-600 text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded">
+                                            Save {formatPrice(savings).replace(/\.00$/, '')}
+                                        </div>
 
-                                    {/* Heart Button */}
-                                    <button className="absolute top-3 right-3 z-10 p-1.5 text-slate-400 hover:text-blue-600 transition-colors bg-white rounded-full border border-slate-100 shadow-sm">
-                                        <Heart className="w-4 h-4" />
-                                    </button>
+                                        {/* Heart Button - Note: Nesting button in link requires e.preventDefault on button if implemented */}
+                                        <button
+                                            className="absolute top-3 right-3 z-20 p-1.5 text-slate-400 hover:text-blue-600 transition-colors bg-white rounded-full border border-slate-100 shadow-sm"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                // Add wishlist logic here
+                                            }}
+                                        >
+                                            <Heart className="w-4 h-4" />
+                                        </button>
 
-                                    {/* Image */}
-                                    <div className="relative aspect-square mb-3 mt-0">
-                                        {(phone.images?.[0] || phone.image_url) ? (
-                                            <Image
-                                                src={phone.images?.[0] || phone.image_url || ''}
-                                                alt={phone.model}
-                                                fill
-                                                className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 rounded-lg">
-                                                <span className="text-xs font-medium">No Image</span>
-                                            </div>
-                                        )}
-                                    </div>
+                                        {/* Image */}
+                                        <div className="relative aspect-square mb-3 mt-0">
+                                            {(phone.images?.[0] || phone.image_url) ? (
+                                                <Image
+                                                    src={phone.images?.[0] || phone.image_url || ''}
+                                                    alt={phone.model}
+                                                    fill
+                                                    className="object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50 rounded-lg">
+                                                    <span className="text-xs font-medium">No Image</span>
+                                                </div>
+                                            )}
+                                        </div>
 
-                                    {/* Content */}
-                                    <div className="space-y-1">
-                                        <h3 className="text-sm text-slate-900 font-medium leading-tight line-clamp-2 mb-2">
-                                            {phone.brand} {phone.model} {phone.storage}
-                                        </h3>
-                                        <div className="space-y-0.5">
-                                            <div className="text-lg font-bold text-slate-900">
-                                                {formatPrice(phone.price)}
-                                            </div>
-                                            <div className="text-xs text-slate-400 line-through">
-                                                {formatPrice(comparePrice)}
+                                        {/* Content */}
+                                        <div className="space-y-1">
+                                            <h3 className="text-sm text-slate-900 font-medium leading-tight line-clamp-2 mb-2">
+                                                {phone.brand} {phone.model} {phone.storage}
+                                            </h3>
+                                            <div className="space-y-0.5">
+                                                <div className="text-lg font-bold text-slate-900">
+                                                    {formatPrice(phone.price)}
+                                                </div>
+                                                <div className="text-xs text-slate-400 line-through">
+                                                    {formatPrice(comparePrice)}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </div>
                             );
                         })}

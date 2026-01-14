@@ -19,7 +19,7 @@ export function Navbar() {
                     {/* Logo */}
                     <Link href="/" className="font-bold text-3xl tracking-tight shrink-0 mr-2">
                         <span className="text-white">PHONE</span>
-                        <span className="bg-punch_red text-platinum px-1 ml-0.5 rounded-sm text-sm align-top font-bold h-4 inline-flex items-center">BOX</span>
+                        <span className="bg-[#ffeb3b] text-black px-1 ml-0.5 rounded-sm text-sm align-top font-bold h-4 inline-flex items-center">BOX</span>
                     </Link>
 
                     {/* Menu Button */}

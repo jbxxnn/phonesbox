@@ -69,7 +69,7 @@ export function StoreDashboard({
             {/* Mobile Navbar */}
             <MobileNavbar />
 
-            <div className="px-0 md:container md:mx-auto md:px-4 space-y-8 pt-2 md:pt-8 min-h-[50vh]">
+            <div className="px-0 md:container md:mx-auto md:px-4 space-y-8 pt-2 md:pt-4 min-h-[50vh]">
 
                 {/* Hero & Categories - Hidden when searching */}
                 {!searchQuery && (

@@ -22,7 +22,7 @@ export function HeroBanner() {
             </div>
 
             {/* Right Card: Outlet Event */}
-            <div className="relative overflow-hidden col-span-1 md:col-span-1 rounded-xl h-[300px] md:h-[400px] p-8 flex flex-col justify-center items-start bg-gradient-to-br from-[#0046be] via-[#6a0dad] to-[#d90429]">
+            <div className="relative overflow-hidden col-span-1 md:col-span-1 rounded-xl h-[350px] md:h-[400px] p-8 flex flex-col justify-center items-start bg-gradient-to-br from-[#0046be] via-[#6a0dad] to-[#d90429]">
                 <div className="relative z-10">
                     <h2 className="text-[#fff200] text-5xl md:text-7xl font-medium leading-none mb-4">
                         Outlet<br />Deals

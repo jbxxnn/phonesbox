@@ -34,7 +34,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                 {/* Mobile: Full width top banner */}
                 {/* Desktop: Fixed width left sidebar */}
                 <div className="">
-                    <div className="bg-yellow-300 p-2">
+                    <div className="bg-[#0046be] p-2">
                         <div className="
                     w-full md:w-[240px] md:min-w-[240px] md:h-auto
                     bg-gradient-to-br from-[#00c3e3] to-[#0046be]

@@ -13,6 +13,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 import { TrendingDeals } from "./trending-deals";
 import { TopDeals } from "./top-deals";
+import { RecommendedForYou } from "./recommended-for-you";
 
 export function StoreDashboard({
     initialPhones,
@@ -78,6 +79,7 @@ export function StoreDashboard({
                             <HeroBanner />
                             <TrendingDeals phones={initialPhones} currency={currency} />
                             <TopDeals phones={initialPhones} currency={currency} />
+                            <RecommendedForYou phones={initialPhones} currency={currency} />
                         </section>
                     </>
                 )}

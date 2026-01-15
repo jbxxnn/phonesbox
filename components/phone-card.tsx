@@ -67,14 +67,14 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
                         {phone.brand}
                     </p>
 
-                    <h3 className="font-medium text-slate-900 leading-tight line-clamp-2 min-h-[2.5rem]" title={`${phone.brand} ${phone.model}`}>
+                    <h3 className="font-medium text-slate-900 leading-tight line-clamp-2" title={`${phone.brand} ${phone.model}`}>
                         {phone.brand} {phone.model} {phone.storage ? `- ${phone.storage}` : ''}
                     </h3>
 
                     {/* Spacer to push price to bottom */}
                     <div className="flex-1" />
 
-                    <div className="space-y-1 pt-2">
+                    <div className="space-y-1">
                         {phone.compare_at_price && (
                             <p className="text-[10px] font-bold text-slate-900">Winter Sale Deal</p>
                         )}

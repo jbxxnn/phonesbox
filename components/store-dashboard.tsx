@@ -84,7 +84,7 @@ export function StoreDashboard({
                     </>
                 )}
 
-                <div className="h-10" />
+                {/* <div className="h-10" /> */}
 
 
             </div>

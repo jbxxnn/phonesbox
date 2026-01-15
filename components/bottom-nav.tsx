@@ -2,8 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Search, ShoppingCart, User, MessageCircle } from "lucide-react";
+import { Home01Icon, Search01Icon, ShoppingBasket02Icon, User03Icon, Message01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { cn } from "@/lib/utils";
+
+type NavItem = {
+    icon: any; // Using any to match the icon object from hugeicons library
+    label: string;
+    href: string;
+    disabled?: boolean;
+    admin?: boolean;
+};
 
 export function BottomNav() {
     const pathname = usePathname();
@@ -11,11 +20,11 @@ export function BottomNav() {
     // Hide on admin routes
     if (pathname.startsWith("/admin")) return null;
 
-    const navItems = [
-        { icon: Home, label: "Home", href: "/" },
-        { icon: MessageCircle, label: "Chat", href: "#", disabled: true }, // Placeholder
-        { icon: ShoppingCart, label: "Cart", href: "#", disabled: true }, // Placeholder
-        { icon: User, label: "Profile", href: "/admin", admin: true }, // Quick link to admin for now
+    const navItems: NavItem[] = [
+        { icon: Home01Icon, label: "Home", href: "/" },
+        { icon: Message01Icon, label: "Chat", href: "#", disabled: true }, // Placeholder
+        { icon: ShoppingBasket02Icon, label: "Cart", href: "#", disabled: true }, // Placeholder
+        { icon: User03Icon, label: "Profile", href: "/admin", admin: true }, // Quick link to admin for now
     ];
 
     return (
@@ -35,12 +44,12 @@ export function BottomNav() {
                                 item.disabled && "opacity-50 pointer-events-none"
                             )}
                         >
-                            <item.icon className={cn("w-6 h-6", isActive && "fill-current")} />
+                            <HugeiconsIcon icon={item.icon} size={24} className={cn(isActive && "fill-current")} />
                             <span>{item.label}</span>
                         </Link>
                     );
                 })}
             </div>
-        </div>
+        </div >
     );
 }

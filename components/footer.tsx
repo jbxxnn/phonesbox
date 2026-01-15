@@ -11,20 +11,21 @@ export function Footer() {
                     <div className="flex items-center justify-between py-2 text-xs text-white/90">
                         {/* Left Links */}
                         <div className="flex items-center gap-4 text-platinum hover:text-lavender_gray">
-                            <Link href="/shop" className="hover:underline">Top Deals</Link>
-                            <Link href="/shop" className="hover:underline">Deal of the Day</Link>
-                            <Link href="/shop" className="hover:underline">Yes, Best Buy Sells That</Link>
-                            <Link href="#" className="hover:underline">My Best Buy Memberships</Link>
-                            <Link href="#" className="hover:underline">Credit Cards</Link>
-                            <Link href="#" className="hover:underline">Gift Cards</Link>
-                            <Link href="#" className="hover:underline">Gift Ideas</Link>
+                            <Link href="/shop" className="hover:underline">All Phones</Link>
+                            <Link href="/shop?brand=Samsung" className="hover:underline">Samsung</Link>
+                            <Link href="/shop?brand=Apple" className="hover:underline">Apple</Link>
+                            <Link href="/shop?brand=Google" className="hover:underline">Google</Link>
+                            <Link href="/shop?brand=Xiaomi" className="hover:underline">Xiaomi</Link>
+                            <Link href="/shop?brand=OnePlus" className="hover:underline">OnePlus</Link>
+                            <Link href="/shop?brand=Realme" className="hover:underline">Realme</Link>
+                            <Link href="/shop?brand=Oppo" className="hover:underline">Oppo</Link>
                         </div>
 
                         {/* Right Links */}
                         <div className="flex items-center gap-4">
-                            <Link href="#" className="hover:underline hover:text-white">Recently Viewed</Link>
-                            <Link href="#" className="hover:underline hover:text-white">Order Status</Link>
-                            <Link href="#" className="hover:underline hover:text-white">Saved Items</Link>
+                            <Link href="/shop" className="hover:underline hover:text-white">Recently Viewed</Link>
+                            <Link href="/shop" className="hover:underline hover:text-white">Order Status</Link>
+                            <Link href="/shop" className="hover:underline hover:text-white">Saved Items</Link>
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Menu02Icon, Search02Icon, ShoppingBasket02Icon } from '@hugeicons/core-free-icons';
+import { useCart } from "@/lib/cart-context";
 
 const CATEGORIES = [
     { id: 'all', label: 'All Phones' },
@@ -22,6 +23,7 @@ export function MobileNavbar() {
     const { replace } = useRouter();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q")?.toString() || "");
+    const { cartCount } = useCart(); // Add this hook
 
     useEffect(() => {
         setSearchQuery(searchParams.get("q")?.toString() || "");
@@ -41,7 +43,7 @@ export function MobileNavbar() {
     return (
         <div className="md:hidden fixed top-0 left-0 w-full z-50 bg-charcoal text-white shadow-md">
             {/* Top Row: Menu, Logo, Search, Cart */}
-            <div className="flex items-center justify-between px-4 py-3 gap-3">
+            <div className="flex items-center justify-between p-3 gap-3">
                 {/* Left: Menu & Logo */}
                 <div className="flex items-center gap-3 shrink-0">
                     <button className="text-white">
@@ -54,7 +56,7 @@ export function MobileNavbar() {
                 </div>
 
                 {/* Center: Search Bar (Visible on mobile as wide as possible) */}
-                <div className="flex-1 max-w-[50%] xs:max-w-none relative">
+                <div className="flex-1 h-9 mx-1">
                     <div className="relative w-full h-9">
                         <input
                             type="text"
@@ -70,11 +72,13 @@ export function MobileNavbar() {
                 </div>
 
                 {/* Right: Cart */}
-                <Link href="#" className="text-white shrink-0 relative">
+                <Link href="/cart" className="text-white shrink-0 relative">
                     <HugeiconsIcon icon={ShoppingBasket02Icon} size={24} />
-                    <span className="absolute -top-1 -right-1 bg-[#ffeb3b] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                        2
-                    </span>
+                    {cartCount > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-[#ffeb3b] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                            {cartCount}
+                        </span>
+                    )}
                 </Link>
             </div>
 
@@ -84,14 +88,14 @@ export function MobileNavbar() {
                     {CATEGORIES.map((cat) => (
                         <Link
                             key={cat.id}
-                            href="#"
+                            href={cat.id === 'all' ? '/' : `/shop?brand=${cat.id}`}
                             className="text-white/90 hover:text-white"
                         >
                             {cat.label}
                         </Link>
                     ))}
-                    <Link href="#" className="text-white/90 hover:text-white">Order Status</Link>
-                    <Link href="#" className="text-white/90 hover:text-white">Account</Link>
+                    <Link href="/shop" className="text-white/90 hover:text-white">Order Status</Link>
+                    <Link href="/shop" className="text-white/90 hover:text-white">Account</Link>
                 </div>
             </div>
         </div>

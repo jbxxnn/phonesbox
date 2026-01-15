@@ -14,7 +14,7 @@ export function HeroBanner() {
                 </div>
 
                 <Link
-                    href="#"
+                    href="/shop"
                     className="relative z-10 mt-8 px-6 py-2 bg-white text-[#0046be] text-sm font-bold rounded-full hover:bg-gray-100 transition-colors"
                 >
                     Shop now

@@ -38,7 +38,7 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
                     </div>
 
                     {phone.images && phone.images.length > 0 ? (
-                        <div className="relative w-full h-full p-4">
+                        <div className="relative w-full h-full p-0">
                             <Image
                                 src={phone.images[0]}
                                 alt={`${phone.brand} ${phone.model}`}
@@ -47,7 +47,7 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
                             />
                         </div>
                     ) : phone.image_url ? (
-                        <div className="relative w-full h-full p-4">
+                        <div className="relative w-full h-full p-0">
                             <img
                                 src={phone.image_url}
                                 alt={`${phone.brand} ${phone.model}`}

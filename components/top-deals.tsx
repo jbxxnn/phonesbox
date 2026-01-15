@@ -58,7 +58,7 @@ export function TopDeals({ phones, currency = 'USD' }: TopDealsProps) {
                     </div>
                     <div className="hidden md:block mt-4 w-full text-center">
                         <Link
-                            href="/deals"
+                            href="/shop"
                             className="block w-full py-3 bg-white text-blue-700 font-bold text-sm border border-blue-700 rounded-full hover:bg-space_indigo hover:text-white hover:border hover:border-space_indigo transition-colors"
                         >
                             See all Top Deals

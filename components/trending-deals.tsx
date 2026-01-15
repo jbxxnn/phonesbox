@@ -37,7 +37,7 @@ export function TrendingDeals({ phones, currency = 'USD' }: TrendingDealsProps) 
             {/* Header */}
             <div className="flex items-center justify-between">
                 <h2 className="text-xl md:text-2xl font-bold text-slate-900">Trending deals</h2>
-                <Link href="#" className="text-blue-600 font-medium text-sm hover:underline">
+                <Link href="/shop" className="text-blue-600 font-medium text-sm hover:underline">
                     See more
                 </Link>
             </div>

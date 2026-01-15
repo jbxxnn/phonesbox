@@ -23,8 +23,8 @@ export function BottomNav() {
     const navItems: NavItem[] = [
         { icon: Home01Icon, label: "Home", href: "/" },
         { icon: Message01Icon, label: "Chat", href: "#", disabled: true }, // Placeholder
-        { icon: ShoppingBasket02Icon, label: "Cart", href: "#", disabled: true }, // Placeholder
-        { icon: User03Icon, label: "Profile", href: "/admin", admin: true }, // Quick link to admin for now
+        { icon: ShoppingBasket02Icon, label: "Cart", href: "/cart", disabled: true }, // Placeholder
+        { icon: User03Icon, label: "Profile", href: "/account", admin: true }, // Quick link to admin for now
     ];
 
     return (

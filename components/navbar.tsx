@@ -6,13 +6,13 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Menu02Icon, Search01Icon, Search02Icon, ShoppingBasket02Icon, User03Icon } from '@hugeicons/core-free-icons';
 
-import { useCart } from "@/lib/cart-context";
+
 
 export function Navbar() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
-    const { cartCount } = useCart(); // Add this hook
+
 
     return (
         <div className="flex flex-col w-full bg-charcoal hidden md:flex">
@@ -53,32 +53,7 @@ export function Navbar() {
                     </div>
 
                     {/* Right Side Icons */}
-                    <div className="flex items-center gap-8 ml-auto shrink-0 text-platinum">
-                        <Link href="/account" className="flex items-center gap-2 hover:text-gray-300 transition-colors">
-                            <HugeiconsIcon
-                                icon={User03Icon}
-                                size={20}
-                                className="text-white"
-                            />
-                            <span className="text-sm font-medium">Account</span>
-                        </Link>
 
-                        <Link href="/cart" className="flex items-center gap-2 hover:text-gray-300 transition-colors">
-                            <div className="relative">
-                                <HugeiconsIcon
-                                    icon={ShoppingBasket02Icon}
-                                    size={24}
-                                    className="text-white"
-                                />
-                                {cartCount > 0 && (
-                                    <span className="absolute -top-1.5 -right-1.5 bg-[#ffeb3b] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                                        {cartCount}
-                                    </span>
-                                )}
-                            </div>
-                            <span className="text-sm font-medium">Cart</span>
-                        </Link>
-                    </div>
                 </div>
             </header>
 

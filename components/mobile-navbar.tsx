@@ -6,7 +6,7 @@ import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Menu02Icon, Search02Icon, ShoppingBasket02Icon } from '@hugeicons/core-free-icons';
-import { useCart } from "@/lib/cart-context";
+
 
 const CATEGORIES = [
     { id: 'all', label: 'All Phones' },
@@ -23,7 +23,7 @@ export function MobileNavbar() {
     const { replace } = useRouter();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState(searchParams.get("q")?.toString() || "");
-    const { cartCount } = useCart(); // Add this hook
+
 
     useEffect(() => {
         setSearchQuery(searchParams.get("q")?.toString() || "");
@@ -71,15 +71,7 @@ export function MobileNavbar() {
                     </div>
                 </div>
 
-                {/* Right: Cart */}
-                <Link href="/cart" className="text-white shrink-0 relative">
-                    <HugeiconsIcon icon={ShoppingBasket02Icon} size={24} />
-                    {cartCount > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-[#ffeb3b] text-black text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                            {cartCount}
-                        </span>
-                    )}
-                </Link>
+
             </div>
 
             {/* Bottom Row: Categories Slider */}
@@ -94,8 +86,7 @@ export function MobileNavbar() {
                             {cat.label}
                         </Link>
                     ))}
-                    <Link href="/shop" className="text-white/90 hover:text-white">Order Status</Link>
-                    <Link href="/shop" className="text-white/90 hover:text-white">Account</Link>
+
                 </div>
             </div>
         </div>

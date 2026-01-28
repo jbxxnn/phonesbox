@@ -22,7 +22,7 @@ const outfit = Outfit({
   display: "swap",
 });
 
-import { CartProvider } from "@/lib/cart-context";
+
 
 export default function RootLayout({
   children,
@@ -31,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.className} antialiased bg-gradient-to-b from-blue-100 via-blue-50 to-white min-h-screen text-slate-900`}>
+      <body className={`${outfit.className} antialiased min-h-screen text-slate-900`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -39,18 +39,16 @@ export default function RootLayout({
           forcedTheme="light"
           disableTransitionOnChange
         >
-          <CartProvider>
-            <Suspense fallback={<div className="h-16 w-full bg-background/80 border-b" />}>
-              <Navbar />
-            </Suspense>
-            {children}
-            <Suspense fallback={null}>
-              <BottomNav />
-            </Suspense>
-            <Footer />
-          </CartProvider>
+          <Suspense fallback={<div className="h-16 w-full bg-background/80 border-b" />}>
+            <Navbar />
+          </Suspense>
+          {children}
+          <Suspense fallback={null}>
+            <BottomNav />
+          </Suspense>
+          <Footer />
         </ThemeProvider>
       </body>
-    </html>
+    </html >
   );
 }

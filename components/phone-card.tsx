@@ -19,7 +19,7 @@ export function PhoneCard({ phone, currency }: { phone: Phone, currency?: string
 
     return (
         <Link href={`/phones/${phone.id}`} className="group block h-full">
-            <div className="bg-white rounded-xl overflow-hidden h-full flex flex-col p-4 transition-all hover:shadow-lg border border-transparent hover:border-slate-200">
+            <div className="bg-white rounded-xl overflow-hidden h-full flex flex-col p-2 transition-all shadow-md hover:shadow-lg border border-transparent hover:border-slate-200">
                 {/* Image Container */}
                 <div className="relative aspect-square mb-4 rounded-lg overflow-hidden bg-slate-50 flex items-center justify-center group-hover:bg-slate-100 transition-colors">
                     {/* Heart Button */}

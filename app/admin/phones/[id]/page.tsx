@@ -1,48 +1,72 @@
 "use client";
 
+import { DealManager } from "@/components/admin/deal-manager";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Loader2, Trash } from "lucide-react";
+import { useEffect, useState, use } from "react";
+import { Loader2, Plus, Trash, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 import { Phone } from "@/lib/types";
 
 export default function EditPhonePage({ params }: { params: Promise<{ id: string }> }) {
     const router = useRouter();
+    const resolvedParams = use(params);
     const [loading, setLoading] = useState(false);
-    const [phone, setPhone] = useState<Phone | null>(null);
     const [fetching, setFetching] = useState(true);
+    const [phone, setPhone] = useState<Phone | null>(null);
 
-    // We need to unwrap params in a client component too if using Next.js 15 async params, 
-    // but for client components usually we unwrap via use() or await in useEffect.  
-    // Actually, since this is a client component, `params` is a promise in Next.js 15.
-    // We'll handle it inside useEffect.
+    // Form states
+    const [imageUrls, setImageUrls] = useState<string[]>([""]);
+    const [colorInput, setColorInput] = useState("");
 
     useEffect(() => {
         async function fetchPhone() {
-            const { id } = await params;
             const supabase = createClient();
             const { data, error } = await supabase
                 .from("phones")
                 .select("*")
-                .eq("id", id)
+                .eq("id", resolvedParams.id)
                 .single();
 
             if (data) {
-                setPhone(data as Phone);
+                const p = data as Phone;
+                setPhone(p);
+                // Initialize form state
+                setImageUrls(p.images && p.images.length > 0 ? p.images : (p.image_url ? [p.image_url] : [""]));
+                setColorInput(p.colors ? p.colors.join(", ") : "");
             }
             setFetching(false);
         }
         fetchPhone();
-    }, [params]);
+    }, [resolvedParams.id]);
+
+    const addImageUrlField = () => setImageUrls([...imageUrls, ""]);
+    const updateImageUrl = (index: number, value: string) => {
+        const newUrls = [...imageUrls];
+        newUrls[index] = value;
+        setImageUrls(newUrls);
+    };
+    const removeImageUrl = (index: number) => {
+        setImageUrls(imageUrls.filter((_, i) => i !== index));
+    };
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (!phone) return;
-
         setLoading(true);
 
         const formData = new FormData(event.currentTarget);
         const supabase = createClient();
+
+        // Process images
+        const images = imageUrls.filter(url => url.trim() !== "");
+        // Process colors
+        const colors = colorInput.split(",").map(c => c.trim()).filter(c => c !== "");
 
         const phoneData = {
             brand: formData.get("brand"),
@@ -50,8 +74,14 @@ export default function EditPhonePage({ params }: { params: Promise<{ id: string
             variant: formData.get("variant"),
             condition: formData.get("condition"),
             price: parseFloat(formData.get("price") as string),
+            compare_at_price: formData.get("compare_at_price") ? parseFloat(formData.get("compare_at_price") as string) : null,
             availability_status: formData.get("status"),
-            image_url: formData.get("image_url"),
+            image_url: images[0] || "",
+            description: formData.get("description"),
+            images: images,
+            colors: colors,
+            // Preserve existing specs for now as we don't have a UI for it yet
+            specs: phone.specs || {},
         };
 
         const { error } = await supabase
@@ -88,78 +118,140 @@ export default function EditPhonePage({ params }: { params: Promise<{ id: string
     if (!phone) return <div className="p-8">Phone not found</div>;
 
     return (
-        <div className="max-w-2xl mx-auto space-y-6">
-            <div className="flex items-center justify-between space-y-2">
+        <div className="max-w-4xl mx-auto space-y-6 pb-24">
+            <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold">Edit Phone</h1>
                     <p className="text-muted-foreground">Manage listing for {phone.model}</p>
                 </div>
-                <button
-                    onClick={handleDelete}
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-destructive/50 bg-destructive/10 text-destructive hover:bg-destructive/20 h-10 px-4 py-2"
-                >
+                <Button variant="destructive" size="sm" onClick={handleDelete} disabled={loading}>
                     <Trash className="mr-2 h-4 w-4" />
                     Delete
-                </button>
+                </Button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4 border p-6 rounded-lg bg-card">
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Brand</label>
-                        <input name="brand" defaultValue={phone.brand} required className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Model</label>
-                        <input name="model" defaultValue={phone.model} required className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* Basic Info */}
+                    <Card>
+                        <CardContent className="pt-6 space-y-4">
+                            <h3 className="font-semibold text-lg">Basic Information</h3>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Brand</Label>
+                                    <Input name="brand" defaultValue={phone.brand} required />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Model</Label>
+                                    <Input name="model" defaultValue={phone.model} required />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Variant</Label>
+                                    <Input name="variant" defaultValue={phone.variant} required />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Condition</Label>
+                                    <Select name="condition" defaultValue={phone.condition}>
+                                        <SelectTrigger><SelectValue /></SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="New">New</SelectItem>
+                                            <SelectItem value="Refurbished">Refurbished</SelectItem>
+                                            <SelectItem value="Used - Grade A">Used - Grade A</SelectItem>
+                                            <SelectItem value="Used - Grade B">Used - Grade B</SelectItem>
+                                            <SelectItem value="Used">Used</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label>Price (USD)</Label>
+                                    <Input name="price" type="number" defaultValue={phone.price} required />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label>Compare At Price</Label>
+                                    <Input name="compare_at_price" type="number" defaultValue={phone.compare_at_price || ""} placeholder="Optional" />
+                                </div>
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Status</Label>
+                                <Select name="status" defaultValue={phone.availability_status}>
+                                    <SelectTrigger><SelectValue /></SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="in_stock">In Stock</SelectItem>
+                                        <SelectItem value="limited">Limited</SelectItem>
+                                        <SelectItem value="request">Request Only</SelectItem>
+                                        <SelectItem value="sold">Sold Out</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Colors (comma separated)</Label>
+                                <Input
+                                    value={colorInput}
+                                    onChange={(e) => setColorInput(e.target.value)}
+                                    placeholder="Blue, Graphite, Silver"
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+
+
+                    // ... existing imports ...
+
+                    // Inside the component:
+
+                    {/* Media & Details */}
+                    <Card>
+                        <CardContent className="pt-6 space-y-4">
+                            <h3 className="font-semibold text-lg">Details & Media</h3>
+                            <div className="space-y-2">
+                                <Label>Description</Label>
+                                <Textarea
+                                    name="description"
+                                    defaultValue={phone.description || ""}
+                                    placeholder="Detailed product description..."
+                                    className="min-h-[120px]"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label>Image URLs</Label>
+                                <div className="space-y-2">
+                                    {imageUrls.map((url, idx) => (
+                                        <div key={idx} className="flex gap-2">
+                                            <Input
+                                                value={url}
+                                                onChange={(e) => updateImageUrl(idx, e.target.value)}
+                                                placeholder={idx === 0 ? "Main Image URL" : "Gallery Image URL"}
+                                            />
+                                            {imageUrls.length > 1 && (
+                                                <Button type="button" variant="ghost" size="icon" onClick={() => removeImageUrl(idx)}>
+                                                    <X className="w-4 h-4" />
+                                                </Button>
+                                            )}
+                                        </div>
+                                    ))}
+                                    <Button type="button" variant="outline" size="sm" onClick={addImageUrlField} className="w-full">
+                                        <Plus className="w-4 h-4 mr-2" /> Add Image
+                                    </Button>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Variant (RAM/Storage)</label>
-                        <input name="variant" defaultValue={phone.variant} required className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Condition</label>
-                        <select name="condition" defaultValue={phone.condition} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                            <option value="New">New</option>
-                            <option value="Used - Grade A">Used - Grade A</option>
-                            <option value="Used - Grade B">Used - Grade B</option>
-                            <option value="Refurbished">Refurbished</option>
-                        </select>
-                    </div>
-                </div>
+                {/* Deals Manager Section */}
+                <DealManager phoneId={phone.id} />
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Price (USD)</label>
-                        <input name="price" type="number" defaultValue={phone.price} required className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Status</label>
-                        <select name="status" defaultValue={phone.availability_status} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-                            <option value="in_stock">In Stock</option>
-                            <option value="limited">Limited</option>
-                            <option value="request">Request Only</option>
-                            <option value="sold">Sold Out</option>
-                        </select>
-                    </div>
+                <div className="flex justify-end">
+                    <Button type="submit" disabled={loading} size="lg" className="w-full md:w-auto">
+                        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        Update Listing
+                    </Button>
                 </div>
-
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">Image URL</label>
-                    <input name="image_url" defaultValue={phone.image_url} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background" />
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 w-full"
-                >
-                    {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    Update Listing
-                </button>
             </form>
         </div>
     );
